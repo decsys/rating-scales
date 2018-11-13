@@ -1,4 +1,7 @@
-/** @module */
+/**
+ * Default values used across components
+ * @module
+ */
 
 /**
  * The default height of the Scale's containing Frame
