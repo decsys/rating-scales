@@ -16,3 +16,17 @@ export const FrameHeight = "400px";
  * @type {string}
  */
 export const BaseFontSize = "14px";
+
+/**
+ * Default color for component parts
+ *
+ * @type {string}
+ */
+export const Color = "black";
+
+/**
+ * Default typeface for component parts
+ *
+ * @type {string}
+ */
+export const Font = "Arial";
