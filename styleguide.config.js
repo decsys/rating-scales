@@ -23,6 +23,11 @@ module.exports = {
       name: "Core Components",
       content: "src/core/overview.md",
       components: ["src/core/*.js"]
+    },
+    {
+      name: "Likert Scale",
+      content: "src/likert/overview.md",
+      components: ["src/likert/*.js"]
     }
   ]
 };
