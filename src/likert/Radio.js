@@ -6,7 +6,6 @@ const labelDistance = "2.8rem";
 
 /**
  * A styled label that can be above or below a radio button.
- * @component
  */
 const RadioLabel = styled.label`
   color: ${props => props.labelColor};
@@ -35,7 +34,6 @@ RadioLabel.propTypes = {
  * A styled label that can be above or below a radio button.
  *
  * It's intended for use as a secondary label, further from the scale bar.
- * @component
  */
 const SecondaryRadioLabel = styled(RadioLabel)`
   font-weight: bold;
@@ -45,7 +43,6 @@ const SecondaryRadioLabel = styled(RadioLabel)`
 
 /**
  * A styled radio button input
- * @component
  */
 const RadioInput = styled.input.attrs({
   type: "radio",
@@ -56,7 +53,6 @@ const RadioInput = styled.input.attrs({
 
 /**
  * A styled containing div for a single labelled radio button
- * @component
  */
 const RadioContainer = styled.div`
   position: relative;
@@ -157,5 +153,4 @@ Radio.propTypes = {
   secondaryLabel: PropTypes.string
 };
 
-/** @component */
 export default Radio;
