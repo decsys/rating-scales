@@ -17,7 +17,12 @@
     "extends": [
       "@universityofnottingham",
       "plugin:react/recommended"
-    ]
+    ],
+    "settings": {
+      "react": {
+        "version": "16.0"
+      }
+    }
   },
   "babel": {
     "presets": [

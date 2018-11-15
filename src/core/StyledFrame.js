@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
  *
  * This component sets a base CSS font-size which many relative values
  * (`em`, `rem`, `%`) in sub-components are based on
- * @module
  */
 const StyledFrame = styled.div`
   height: ${props => props.frameHeight};
