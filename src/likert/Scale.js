@@ -21,7 +21,7 @@ class LikertScale extends React.Component {
       if (this.props.radios[i])
         radios.push(
           <Radio
-            {...this.props.radios}
+            {...this.props.radioOptions}
             labelAbove={this.props.radioOptions.labelAlignment === "above"}
             id={id}
             key={id}
