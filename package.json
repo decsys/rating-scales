@@ -8,7 +8,7 @@
     "lint": "eslint src/**/*.js",
     "lib": "npm run lint && babel src -d lib --no-comments --minified --delete-dir-on-start",
     "dist": "webpack --env.NODE_ENV=development",
-    "dist:prod": "webpack",
+    "dist:prod": "npm run clean && webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "styleguidist build",
     "precommit": "pretty-quick --staged"
