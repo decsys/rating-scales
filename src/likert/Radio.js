@@ -138,10 +138,10 @@ Radio.propTypes = {
   labelColor: PropTypes.string,
 
   /** A valid CSS Font Family value for any labels associated with this Radio component. */
-  fontFamily: PropTypes.string.isRequired,
+  fontFamily: PropTypes.string,
 
   /** A valid CSS Font Size value for any labels associated with this Radio component. */
-  fontSize: PropTypes.string.isRequired,
+  fontSize: PropTypes.string,
 
   /** Whether the RadioInput should default to being checked. */
   defaultChecked: PropTypes.bool,

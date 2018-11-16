@@ -61,7 +61,7 @@ StyledQuestion.propTypes = {
   fontSize: PropTypes.string,
 
   /** Text alignment of the question within the frame. */
-  xAlign: PropTypes.oneOf("left", "center", "right")
+  xAlign: PropTypes.oneOf(["left", "center", "right"])
 };
 
 StyledQuestion.defaultProps = {

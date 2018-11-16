@@ -1,4 +1,3 @@
-// Test comments
+import LikertScale from "./likert/Scale";
 
-export const Test = () =>
-  console.log("hello, world");
+export { LikertScale };
