@@ -1,17 +1,20 @@
-// const path = require("path");
-// const pkg = require("./package.json");
+const path = require("path");
+const pkg = require("./package.json");
 
 module.exports = {
   styleguideDir: "docs",
   title: "Decsys Rating Scales",
 
   // TODO fix final import pathing
-  // getComponentPathLine(componentPath) {
-  //   const name = path.basename(componentPath, ".js");
+  getComponentPathLine(componentPath) {
+    const name = path.basename(componentPath, ".js");
 
-  //   const dir = path.dirname(componentPath).replace(/src[\\\/]/, `${pkg.name}/`);
-  //   return `import ${name} from '${dir}';`;
-  // },
+    const dir = componentPath
+      .replace(/src/, `${pkg.name}`)
+      .replace(/\\/g, "/")
+      .replace(".js", "");
+    return `import ${name} from '${dir}';`;
+  },
 
   pagePerSection: true,
   sections: [
