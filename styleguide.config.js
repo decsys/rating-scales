@@ -28,6 +28,11 @@ module.exports = {
       name: "Likert Scale",
       content: "src/likert/overview.md",
       components: ["src/likert/*.js"]
+    },
+    {
+      name: "Ellipse Scale",
+      content: "src/ellipse/overview.md",
+      components: ["src/ellipse/*.js"]
     }
   ]
 };

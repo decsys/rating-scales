@@ -63,7 +63,36 @@ const RadioContainer = styled.div`
 /**
  * A Labelled Radio Button component for use on the Likert Scale
  */
-class Radio extends React.Component {
+export default class Radio extends React.Component {
+  static propTypes = {
+    /** The index of this Radio component in an array of Radio components. */
+    index: PropTypes.number.isRequired,
+
+    /** The value of this Radio component. */
+    value: PropTypes.string.isRequired,
+
+    /** Value to be used as the RadioInput's id. */
+    id: PropTypes.string.isRequired,
+
+    /** CSS Color value for any labels associated with this Radio component. */
+    labelColor: PropTypes.string,
+
+    /** A valid CSS Font Family value for any labels associated with this Radio component. */
+    fontFamily: PropTypes.string,
+
+    /** A valid CSS Font Size value for any labels associated with this Radio component. */
+    fontSize: PropTypes.string,
+
+    /** Whether the RadioInput should default to being checked. */
+    defaultChecked: PropTypes.bool,
+
+    /** Whether RadioLabels should be above or below the RadioInput. */
+    labelAbove: PropTypes.bool,
+
+    /** Optional text for a secondary label */
+    secondaryLabel: PropTypes.string
+  };
+
   static defaultProps = {
     labelColor: "black",
     fontFamily: "Arial",
@@ -123,34 +152,3 @@ class Radio extends React.Component {
     );
   }
 }
-
-Radio.propTypes = {
-  /** The index of this Radio component in an array of Radio components. */
-  index: PropTypes.number.isRequired,
-
-  /** The value of this Radio component. */
-  value: PropTypes.string.isRequired,
-
-  /** Value to be used as the RadioInput's id. */
-  id: PropTypes.string.isRequired,
-
-  /** CSS Color value for any labels associated with this Radio component. */
-  labelColor: PropTypes.string,
-
-  /** A valid CSS Font Family value for any labels associated with this Radio component. */
-  fontFamily: PropTypes.string,
-
-  /** A valid CSS Font Size value for any labels associated with this Radio component. */
-  fontSize: PropTypes.string,
-
-  /** Whether the RadioInput should default to being checked. */
-  defaultChecked: PropTypes.bool,
-
-  /** Whether RadioLabels should be above or below the RadioInput. */
-  labelAbove: PropTypes.bool,
-
-  /** Optional text for a secondary label */
-  secondaryLabel: PropTypes.string
-};
-
-export default Radio;

@@ -1,17 +1,27 @@
 {
   "name": "@decsys/rating-scales",
-  "version": "0.4.0",
+  "version": "0.4.0-alpha.1",
   "description": "Reusable React Components for Rating Scales as used by the DECSYS Project",
   "main": "lib/index.js",
+  "files": [
+    "dist",
+    "lib"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint src/**/*.js",
-    "lib": "npm run lint && babel src -d lib --no-comments --minified --delete-dir-on-start",
-    "dist": "webpack --env.NODE_ENV=development",
-    "dist:prod": "npm run clean && webpack",
+    "build:lib": "babel src -d lib --no-comments --minified --delete-dir-on-start",
+    "build:dist": "webpack --env.NODE_ENV=development",
+    "build:dist:prod": "npm run clean && webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "styleguidist build",
-    "precommit": "pretty-quick --staged"
+    "lib": "npm run lint && npm run build:lib",
+    "dist": "npm run lint && npm run build:dist",
+    "dist:prod": "npm run lint && npm run build:dist:prod",
+    "build:dev": "npm run lint && npm run build:lib && npm run build:dist",
+    "build:prod": "npm run lint && npm run build:lib && npm run build:dist:prod",
+    "precommit": "pretty-quick --staged",
+    "prepublish": "npm run build:prod"
   },
   "eslintConfig": {
     "extends": [
