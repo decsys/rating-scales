@@ -15,6 +15,8 @@ module.exports = {
       .replace(".js", "");
     return `import ${name} from '${dir}';`;
   },
+  // very few non-component js files in this repo, so we ignore them this way
+  ignore: ["**/pen-line.js"],
 
   pagePerSection: true,
   sections: [
