@@ -46,8 +46,9 @@
             markerColor: "red",
             length: "50px",
             thickness: "1em",
+            subColor: "green",
+            subThickness: "0.2em",
             subLength: "20px",
-            subThickness: "0.5em",
             markers: 5,
             subdivisions: 10
           }}
@@ -63,15 +64,17 @@
     <script>
       document.addEventListener("EllipseCompleted", e => {
         document.querySelector("#results").innerHTML = `<dl>
-                                                                    <dt>Min</dt><dd>${
-                                                                      e.detail
-                                                                        .minRangeValue
-                                                                    }</dd>
-                                                                    <dt>Max</dt><dd>${
-                                                                      e.detail
-                                                                        .maxRangeValue
-                                                                    }</dd>
-                                                                </dl>`;
+                                                                          <dt>Min</dt><dd>${
+                                                                            e
+                                                                              .detail
+                                                                              .minRangeValue
+                                                                          }</dd>
+                                                                          <dt>Max</dt><dd>${
+                                                                            e
+                                                                              .detail
+                                                                              .maxRangeValue
+                                                                          }</dd>
+                                                                      </dl>`;
       });
     </script>
   </body>

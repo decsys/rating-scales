@@ -288,6 +288,16 @@ export default class EllipseScale extends React.Component {
           : UnitValue.multiply(this.props.barOptions.thickness, 1.5).toString()
     };
 
+    // adjust scale marker defaults if necessary
+    this.props.scaleMarkerOptions.thickness =
+      this.props.scaleMarkerOptions.thickness != null
+        ? this.props.scaleMarkerOptions.thickness
+        : this.props.barOptions.thickness;
+    this.props.scaleMarkerOptions.length =
+      this.props.scaleMarkerOptions.length != null
+        ? this.props.scaleMarkerOptions.length
+        : UnitValue.multiply(this.props.barOptions.thickness, 8).toString();
+
     return [
       <Frame key="EllipseFrame" frameHeight={this.props.frameHeight}>
         <Question {...this.props.questionOptions}>

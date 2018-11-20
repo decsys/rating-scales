@@ -36,9 +36,16 @@ export default class ScaleMarkerSet extends React.Component {
     const markers = [];
     const nMarkers = this.props.subdivisions * (this.props.markers - 1) + 1;
     const subProps = {
-      markerColor: this.props.subColor,
-      length: this.props.subLength,
-      thickness: this.props.subThickness
+      markerColor:
+        this.props.subColor != null
+          ? this.props.subColor
+          : this.props.markerColor,
+      length:
+        this.props.subLength != null ? this.props.subLength : this.props.length,
+      thickness:
+        this.props.subThickness != null
+          ? this.props.subThickness
+          : this.props.thickness
     };
     for (let i = 0; i < nMarkers; i++) {
       const major = i === 0 || i % this.props.subdivisions === 0;
