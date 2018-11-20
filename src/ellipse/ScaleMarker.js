@@ -7,12 +7,11 @@ import PropTypes from "prop-types";
 const ScaleMarker = styled.div`
   position: absolute;
   &::before {
-    border-left: ${props =>
-      `${props.markerThickness} solid ${props.markerColor}`};
+    border-left: ${props => `${props.thickness} solid ${props.markerColor}`};
     position: absolute;
-    min-height: ${props => props.markerLength};
-    top: ${props => `calc(${props.markerLength} / -2)`};
-    left: ${props => `calc(${props.markerThickness} / -2)`};
+    min-height: ${props => props.length};
+    top: ${props => `calc(${props.length} / -2)`};
+    left: ${props => `calc(${props.thickness} / -2)`};
     z-index: 2;
     content: "";
   }
