@@ -63,18 +63,11 @@
     </script>
     <script>
       document.addEventListener("EllipseCompleted", e => {
-        document.querySelector("#results").innerHTML = `<dl>
-                                                                          <dt>Min</dt><dd>${
-                                                                            e
-                                                                              .detail
-                                                                              .minRangeValue
-                                                                          }</dd>
-                                                                          <dt>Max</dt><dd>${
-                                                                            e
-                                                                              .detail
-                                                                              .maxRangeValue
-                                                                          }</dd>
-                                                                      </dl>`;
+        document.querySelector("#results").innerHTML = `
+                <dl>
+                  <dt>Min</dt><dd>${e.detail.minRangeValue}</dd>
+                  <dt>Max</dt><dd>${e.detail.maxRangeValue}</dd>
+                </dl>`;
       });
     </script>
   </body>
