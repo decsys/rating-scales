@@ -45,7 +45,11 @@
           scaleMarkerOptions={{
             markerColor: "red",
             length: "50px",
-            thickness: "1em"
+            thickness: "1em",
+            subLength: "20px",
+            subThickness: "0.5em",
+            markers: 5,
+            subdivisions: 10
           }}
           frameHeight="300px"
           penOptions={{
@@ -59,15 +63,15 @@
     <script>
       document.addEventListener("EllipseCompleted", e => {
         document.querySelector("#results").innerHTML = `<dl>
-                                                              <dt>Min</dt><dd>${
-                                                                e.detail
-                                                                  .minRangeValue
-                                                              }</dd>
-                                                              <dt>Max</dt><dd>${
-                                                                e.detail
-                                                                  .maxRangeValue
-                                                              }</dd>
-                                                          </dl>`;
+                                                                    <dt>Min</dt><dd>${
+                                                                      e.detail
+                                                                        .minRangeValue
+                                                                    }</dd>
+                                                                    <dt>Max</dt><dd>${
+                                                                      e.detail
+                                                                        .maxRangeValue
+                                                                    }</dd>
+                                                                </dl>`;
       });
     </script>
   </body>

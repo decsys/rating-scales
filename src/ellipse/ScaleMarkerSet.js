@@ -10,22 +10,45 @@ const ScaleMarkerContainer = styled.div`
 /** A set of equally spaced ScaleMarkers, essentially forming a scale along the RangeBar */
 export default class ScaleMarkerSet extends React.Component {
   static propTypes = {
-    /** A valid CSS Color value for the marker */
+    /** A valid CSS Color value for major markers */
     markerColor: PropTypes.string,
-    /** A valid CSS Dimension value for the length of the marker */
+    /** A valid CSS Dimension value for the length of major markers */
     length: PropTypes.string,
-    /** A valid CSS Dimension value for the thickness of the marker */
-    thickness: PropTypes.string
+    /** A valid CSS Dimension value for the thickness of major markers */
+    thickness: PropTypes.string,
+    /** A valid CSS Color value for subdivision markers */
+    subColor: PropTypes.string,
+    /** A valid CSS Dimension value for the length of subdivision markers */
+    subLength: PropTypes.string,
+    /** A valid CSS Dimension value for the thickness of subdividision markers */
+    subThickness: PropTypes.string,
+    /** The number of major markers to display along the scale bar */
+    markers: PropTypes.number,
+    /** The number of marker subdivisions */
+    subdivisions: PropTypes.number
+  };
+
+  static defaultProps = {
+    subdivisions: 1
   };
 
   render() {
-    return [
-      <ScaleMarkerContainer key={"marker1"}>
-        <ScaleMarker {...this.props} />
-      </ScaleMarkerContainer>,
-      <ScaleMarkerContainer key={"marker2"}>
-        <ScaleMarker {...this.props} />
-      </ScaleMarkerContainer>
-    ];
+    const markers = [];
+    const nMarkers = this.props.subdivisions * (this.props.markers - 1) + 1;
+    const subProps = {
+      markerColor: this.props.subColor,
+      length: this.props.subLength,
+      thickness: this.props.subThickness
+    };
+    for (let i = 0; i < nMarkers; i++) {
+      const major = i === 0 || i % this.props.subdivisions === 0;
+      markers.push(
+        <ScaleMarkerContainer key={`scaleMarker${i}`}>
+          <ScaleMarker {...(major ? this.props : subProps)} />
+        </ScaleMarkerContainer>
+      );
+    }
+
+    return markers;
   }
 }
