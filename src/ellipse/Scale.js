@@ -8,6 +8,7 @@ import EllipseCanvas, * as Canvas from "./Canvas";
 import Pen from "./pen-line";
 import Frame from "../core/StyledFrame";
 import Question from "../core/StyledQuestion";
+import FlexContainer from "../core/StyledBarContainer";
 import UnitValue from "unit-value";
 import ScaleMarkerSet from "./ScaleMarkerSet";
 
@@ -293,8 +294,10 @@ export default class EllipseScale extends React.Component {
           {this.props.question}
         </Question>
         <RangeBar ref={e => (this.rangeBar = e)} {...this.props.barOptions}>
-          <ScaleMarkerSet {...this.props.scaleMarkerOptions} />
-          {labels}
+          <FlexContainer>
+            <ScaleMarkerSet {...this.props.scaleMarkerOptions} />
+          </FlexContainer>
+          <FlexContainer>{labels}</FlexContainer>
           <RangeMarker {...rangeMarkerProps} ref={e => (this.minMarker = e)} />
           <RangeMarker {...rangeMarkerProps} ref={e => (this.maxMarker = e)} />
         </RangeBar>
