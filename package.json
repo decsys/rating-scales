@@ -1,6 +1,6 @@
 {
   "name": "@decsys/rating-scales",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Reusable React Components for Rating Scales as used by the DECSYS Project",
   "main": "lib/index.js",
   "files": [
@@ -10,20 +10,43 @@
   "publishConfig": {
     "access": "public"
   },
+  "watch": {
+    "lib": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js"
+    },
+    "dist": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js"
+    }
+  },
   "scripts": {
-    "clean": "rimraf dist",
+    "clean:dist": "rimraf dist",
     "lint": "eslint src/**/*.js",
     "build:lib": "babel src -d lib --no-comments --minified --delete-dir-on-start",
-    "build:dist": "webpack --env.NODE_ENV=development",
-    "build:dist:prod": "npm run clean && webpack",
+    "bundle:dev": "cross-env NODE_ENV=development npm run bundle:prod",
+    "bundle:prod": "parcel build ./src/index.js --global DECSYS --out-file decsys.rating-scales.js",
+    "lib": "run-s lint build:lib",
+    "dist": "run-s lint clean:dist bundle:dev",
+    "dist:prod": "run-s lint clean:dist bundle:prod",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "styleguidist build",
-    "lib": "npm run lint && npm run build:lib",
-    "dist": "npm run lint && npm run build:dist",
-    "dist:prod": "npm run lint && npm run build:dist:prod",
-    "build:dev": "npm run lint && npm run build:lib && npm run build:dist",
-    "build:prod": "npm run lint && npm run build:lib && npm run build:dist:prod",
-    "precommit": "pretty-quick --staged"
+    "watch": "npm-watch",
+    "dev": "npm-run-all -s lint clean -p build:lib bundle:dev",
+    "prod": "npm-run-all -s lint clean -p build:lib bundle:prod"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "alias": {
+    "react": "./globals/react.js",
+    "styled-components": "./globals/styled-components.js"
   },
   "eslintConfig": {
     "extends": [
@@ -57,21 +80,23 @@
   "homepage": "https://github.com/decsys/rating-scales#readme",
   "devDependencies": {
     "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.5",
+    "@babel/core": "^7.1.6",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/standalone": "^7.1.0",
     "@universityofnottingham/eslint-config": "^1.0.0",
     "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.4",
     "bootbox": "^4.4.0",
     "bootstrap": "^4.1.3",
+    "cross-env": "^5.2.0",
     "eslint": "^5.8.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^1.1.3",
     "jquery": "^3.3.1",
+    "npm-run-all": "^4.1.3",
+    "npm-watch": "^0.4.0",
+    "parcel-bundler": "^1.10.3",
     "prettier": "^1.15.2",
     "pretty-quick": "^1.8.0",
     "prop-types": "^15.6.2",
@@ -79,9 +104,7 @@
     "react-dom": "^16.6.3",
     "react-styleguidist": "^8.0.4",
     "rimraf": "^2.6.2",
-    "styled-components": "^4.1.1",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2"
+    "styled-components": "^4.1.1"
   },
   "peerDependencies": {
     "react": "~16",
