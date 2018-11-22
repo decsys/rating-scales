@@ -5,7 +5,18 @@ module.exports = {
   styleguideDir: "docs",
   title: "Decsys Rating Scales",
 
-  // TODO fix final import pathing
+  webpackConfig: {
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loader: "babel-loader"
+        }
+      ]
+    }
+  },
+
   getComponentPathLine(componentPath) {
     const name = path.basename(componentPath, ".js");
 
