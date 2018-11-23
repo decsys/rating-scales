@@ -1,6 +1,6 @@
 const pkg = require("./package.json");
-
 const { BannerPlugin } = require("webpack");
+const CleanPlugin = require("clean-webpack-plugin");
 
 module.exports = env => {
   const prod = ((env && env.NODE_ENV) || "production") === "production";
