@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/decsys/rating-scales.svg?branch=master)](https://travis-ci.org/decsys/rating-scales)
+
 # DECSYS Rating Scales
 
 This package contains re-usable [React] Components used by the DECSYS project for native HTML/JS [Rating Scales].
