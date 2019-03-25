@@ -109,6 +109,7 @@
   },
   "dependencies": {
     "colornames": "^1.1.1",
+    "pixi.js": "^5.0.0-rc.3",
     "unit-value": "^1.0.1"
   }
 }
