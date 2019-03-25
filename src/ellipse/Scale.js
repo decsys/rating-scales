@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import PropTypes from "prop-types";
 import { Application } from "pixi.js/lib/pixi.es";
 import RangeBar from "./RangeBar";
@@ -21,7 +21,7 @@ const resizeHandler = (app, main, ...elems) => {
   Canvas.setDimensions(app.view, { width, height });
   // also set the canvas position to zero it within the window
   // in case it was initialised inside a `position: relative` container
-  Canvas.setPosition(app.view);
+  // Canvas.setPosition(app.view);
   app.renderer.resize(width, height);
 };
 
@@ -30,6 +30,9 @@ export default class EllipseScale extends React.Component {
   constructor(props) {
     super(props);
     this.outputs = {};
+
+    this.canvas = createRef();
+    this.frame = createRef();
   }
 
   static propTypes = {
@@ -318,6 +321,7 @@ export default class EllipseScale extends React.Component {
 
     return [
       <Frame key="EllipseFrame" frameHeight={this.props.frameHeight}>
+        <EllipseCanvas key="EllipseCanvas" ref={e => (this.canvas = e)} />
         <Question {...this.props.questionOptions}>
           {this.props.question}
         </Question>
@@ -329,8 +333,7 @@ export default class EllipseScale extends React.Component {
           <RangeMarker {...rangeMarkerProps} ref={e => (this.minMarker = e)} />
           <RangeMarker {...rangeMarkerProps} ref={e => (this.maxMarker = e)} />
         </RangeBar>
-      </Frame>,
-      <EllipseCanvas key="EllipseCanvas" ref={e => (this.canvas = e)} />
+      </Frame>
     ];
   }
 }
