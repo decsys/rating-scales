@@ -31,7 +31,6 @@ export default class EllipseScale extends React.Component {
     super(props);
     this.outputs = {};
 
-    this.canvas = createRef();
     this.frame = createRef();
   }
 
@@ -211,10 +210,16 @@ export default class EllipseScale extends React.Component {
       const { x, y, width } = this.rangeBar.bounds;
       this.pen.closePath(); // complete the ellipse
 
-      const hits = this.pen.findIntersections(getScrolledY(y));
+      const { top, left } = this.canvas.getBoundingClientRect();
+      let hits = this.pen.findIntersections(
+        getScrolledY(y) - getScrolledY(top)
+      );
 
       // validate the PenLine hits
       if (hits.length !== 1) {
+        // offset hits here so we don't clamp wrong
+        hits = hits.map(x => x + left);
+
         // 1 hit is valid outside the line
         //multiple hits have can't all be the same side
         const allLeft = hits.every(hit => hit < x);
