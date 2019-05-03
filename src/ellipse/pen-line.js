@@ -1,4 +1,4 @@
-import { Graphics } from "pixi.js";
+import { Graphics } from "./pixi";
 import nameToHexString from "colornames";
 
 // Namespaced helpers used internally in this module
