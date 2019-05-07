@@ -1,6 +1,6 @@
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
-import { Application, Graphics } from "./pixi";
+import { Application } from "./pixi";
 import RangeBar from "./RangeBar";
 import ScaleLabel from "./ScaleLabel";
 import RangeMarker from "./RangeMarker";
