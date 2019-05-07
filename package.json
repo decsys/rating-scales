@@ -114,6 +114,7 @@
     "@pixi/core": "^5.0.0",
     "@pixi/display": "^5.0.0",
     "@pixi/graphics": "^5.0.0",
+    "@pixi/interaction": "^5.0.1",
     "@pixi/math": "^5.0.0-rc.3",
     "@pixi/runner": "^5.0.0",
     "@pixi/settings": "^5.0.0",

@@ -9,10 +9,13 @@ export * from "@pixi/display";
 export * from "@pixi/core";
 export * from "@pixi/app";
 export * from "@pixi/graphics";
+import * as interaction from "@pixi/interaction";
+export { interaction };
 
 // Renderer plugins
 import { Renderer, BatchRenderer } from "@pixi/core";
 Renderer.registerPlugin("batch", BatchRenderer);
+Renderer.registerPlugin("interaction", interaction.InteractionManager);
 
 // Application plugins
 import { Application } from "@pixi/app";
