@@ -45,7 +45,7 @@ stages:
                     knownHostsEntry: $(githubKnownHosts)
                     sshPublicKey: $(githubPublicKey)
                     sshKeySecureFile: rating-scales_gh-pages
-                - script: >
+                - script: |
                     git remote add origin
                     git@github.com:decsys/rating-scales.git
                     git push origin HEAD:gh-pages -f
