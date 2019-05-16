@@ -9,7 +9,11 @@ stages:
         steps:
           - script: npm ci
           - script: npm run build
-          - upload: .
+          - upload: |
+              package.json
+              LICENSE.md
+              README.md
+              dist
       - job: Docs
         pool:
           vmImage: ubuntu-latest
