@@ -25,11 +25,12 @@ stages:
         environment: github
         pool:
           vmImage: ubuntu-latest
+        variables:
+        - group: decsys_gh-pages
         strategy:
           runOnce:
             deploy:
               steps:
-              - checkout: none
               - download: current
                 artifact: docs
                 path: $(System.DefaultWorkingDirectory)
