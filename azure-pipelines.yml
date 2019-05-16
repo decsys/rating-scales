@@ -30,7 +30,7 @@ stages:
             deploy:
               steps:
               - checkout: none
-              - download:
+              - download: current
                 artifact: docs
                 path: $(System.DefaultWorkingDirectory)
               - script: |
