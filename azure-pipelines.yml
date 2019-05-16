@@ -22,11 +22,11 @@ stages:
   - stage: Deploy
     jobs:
       - deployment: Docs
-        environment: github
+        environment: GitHub
         pool:
           vmImage: ubuntu-latest
         variables:
-        - group: decsys_gh-pages
+        - group: GitHub
         strategy:
           runOnce:
             deploy:
@@ -44,7 +44,7 @@ stages:
                 inputs:
                   knownHostsEntry: $(githubKnownHosts)
                   sshPublicKey: $(githubPublicKey)
-                  sshKeySecureFile: decsys_gh-pages
+                  sshKeySecureFile: rating-scales_gh-pages
               - script: |
                   git remote add origin git@github.com:decsys/rating-scales.git
                   git push origin HEAD:gh-pages -f
