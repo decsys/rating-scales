@@ -19,7 +19,6 @@ stages:
           - upload: docs
             artifact: docs
   - stage: Deploy
-    # condition: 'and(succeeded(), eq(variables[''Build.SourceBranch''], ''refs/heads/master''))'
     jobs:
       - deployment: Docs
         environment: GitHub
@@ -45,30 +44,9 @@ stages:
                     knownHostsEntry: $(githubKnownHosts)
                     sshPublicKey: $(githubPublicKey)
                     sshKeySecureFile: rating-scales_gh-pages
-                - script: |
+                - script: >
                     git remote add origin
                     git@github.com:decsys/rating-scales.git
+
                     git push origin HEAD:gh-pages -f
                   workingDirectory: $(Pipeline.Workspace)/docs
-
-
-### TRAVIS FILE
-# language: node_js
-# node_js:
-#   - "node"
-# script:
-#   - npm run build
-#   - npm run docs
-# deploy:
-#   - provider: npm
-#     email: $NPM_EMAIL
-#     api_key: $NPM_AUTH_TOKEN
-#     skip_cleanup: true
-#     on:
-#       branch: master
-#   - provider: pages
-#     skip-cleanup: true
-#     github-token: $GITHUB_TOKEN
-#     local-dir: docs
-#     on:
-#       branch: master
