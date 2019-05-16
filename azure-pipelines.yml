@@ -9,11 +9,8 @@ stages:
         steps:
           - script: npm ci
           - script: npm run build
-          - upload: |
-              package.json
-              LICENSE.md
-              README.md
-              dist
+          - upload: dist
+
       - job: Docs
         pool:
           vmImage: ubuntu-latest
@@ -22,9 +19,35 @@ stages:
           - script: npm run docs
           - upload: docs
             artifact: docs
-  # - stage: Deploy
-  #   jobs:
-  #     - job: Package
+  - stage: Deploy
+    jobs:
+      - deployment: Docs
+        environment: github
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+              - checkout: none
+              - download:
+                artifact: docs
+                path: $(System.DefaultWorkingDirectory)
+              - script: |
+                  git init
+                  git config --local user.name "Azure Pipelines"
+                  git config --local user.email "azuredevops@microsoft.com"
+                  git add .
+                  git commit -m "latest docs"
+              - task: InstallSSHKey@0
+                inputs:
+                  knownHostsEntry: $(githubKnownHosts)
+                  sshPublicKey: $(githubPublicKey)
+                  sshKeySecureFile: decsys_gh-pages
+              - script: |
+                  git remote add origin git@github.com:decsys/rating-scales.git
+                  git push origin HEAD:gh-pages -f
+
 
 ### TRAVIS FILE
 # language: node_js
