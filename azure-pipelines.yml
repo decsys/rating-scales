@@ -10,7 +10,6 @@ stages:
           - script: npm ci
           - script: npm run build
           - upload: dist
-
       - job: Docs
         pool:
           vmImage: ubuntu-latest
@@ -20,35 +19,37 @@ stages:
           - upload: docs
             artifact: docs
   - stage: Deploy
+    condition: 'and(succeeded(), eq(variables[''Build.SourceBranch''], ''refs/heads/master''))'
     jobs:
       - deployment: Docs
         environment: GitHub
         pool:
           vmImage: ubuntu-latest
         variables:
-        - group: GitHub
+          - group: GitHub
         strategy:
           runOnce:
             deploy:
               steps:
-              - download: current
-                artifact: docs
-              - script: |
-                  git init
-                  git config --local user.name "Azure Pipelines"
-                  git config --local user.email "azuredevops@microsoft.com"
-                  git add .
-                  git commit -m "latest docs"
-                workingDirectory: $(Pipeline.Workspace)/docs
-              - task: InstallSSHKey@0
-                inputs:
-                  knownHostsEntry: $(githubKnownHosts)
-                  sshPublicKey: $(githubPublicKey)
-                  sshKeySecureFile: rating-scales_gh-pages
-              - script: |
-                  git remote add origin git@github.com:decsys/rating-scales.git
-                  git push origin HEAD:gh-pages -f
-                workingDirectory: $(Pipeline.Workspace)/docs
+                - download: current
+                  artifact: docs
+                - script: |
+                    git init
+                    git config --local user.name "Azure Pipelines"
+                    git config --local user.email "azuredevops@microsoft.com"
+                    git add .
+                    git commit -m "latest docs"
+                  workingDirectory: $(Pipeline.Workspace)/docs
+                - task: InstallSSHKey@0
+                  inputs:
+                    knownHostsEntry: $(githubKnownHosts)
+                    sshPublicKey: $(githubPublicKey)
+                    sshKeySecureFile: rating-scales_gh-pages
+                - script: >
+                    git remote add origin
+                    git@github.com:decsys/rating-scales.git
+                    git push origin HEAD:gh-pages -f
+                  workingDirectory: $(Pipeline.Workspace)/docs
 
 
 ### TRAVIS FILE
