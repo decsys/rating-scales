@@ -17,6 +17,7 @@ stages:
           - script: npm ci
           - script: npm run docs
           - upload: docs
+            artifact: docs
   # - stage: Deploy
   #   jobs:
   #     - job: Package
