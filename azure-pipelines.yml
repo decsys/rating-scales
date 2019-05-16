@@ -33,13 +33,13 @@ stages:
               steps:
               - download: current
                 artifact: docs
-                path: $(System.DefaultWorkingDirectory)
               - script: |
                   git init
                   git config --local user.name "Azure Pipelines"
                   git config --local user.email "azuredevops@microsoft.com"
                   git add .
                   git commit -m "latest docs"
+                workingDirectory: $(Pipeline.Workspace)/docs
               - task: InstallSSHKey@0
                 inputs:
                   knownHostsEntry: $(githubKnownHosts)
@@ -48,6 +48,7 @@ stages:
               - script: |
                   git remote add origin git@github.com:decsys/rating-scales.git
                   git push origin HEAD:gh-pages -f
+                workingDirectory: $(Pipeline.Workspace)/docs
 
 
 ### TRAVIS FILE
