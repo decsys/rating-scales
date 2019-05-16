@@ -1,13 +1,23 @@
 trigger:
   - master
-pool:
-  vmImage: ubuntu-latest
-steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: 10.x
-    displayName: Install Node.js
-  - script: |
-      npm ci
-      npm run build
-    displayName: npm install and build
+stages:
+  - stage: Build
+    jobs:
+      - job: Source
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: npm ci
+          - script: npm run build
+          - upload: "**/*"
+      - job: Docs
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - script: npm ci
+          - script: npm run docs
+          - upload: "docs/*"
+  # - stage: Deploy
+  #   jobs:
+  #     - job: Package
+
