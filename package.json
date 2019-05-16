@@ -57,7 +57,7 @@
     "url": "git+https://github.com/decsys/rating-scales.git"
   },
   "author": "Jonathan Couldridge <jon@jon.gg>",
-  "license": "UNLICENSED",
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/decsys/rating-scales/issues"
   },
