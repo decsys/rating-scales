@@ -9,14 +9,14 @@ stages:
         steps:
           - script: npm ci
           - script: npm run build
-          - upload: "**/*"
+          - upload: .
       - job: Docs
         pool:
           vmImage: ubuntu-latest
         steps:
           - script: npm ci
           - script: npm run docs
-          - upload: "docs/*"
+          - upload: docs
   # - stage: Deploy
   #   jobs:
   #     - job: Package
