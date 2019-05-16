@@ -1,7 +1,7 @@
 [![NPM](https://nodeico.herokuapp.com/@decsys/rating-scales.svg)](https://npmjs.com/package/@decsys/rating-scales)
 
 ![GitHub](https://img.shields.io/github/license/decsys/rating-scales.svg)
-[![Build Status](https://travis-ci.org/decsys/rating-scales.svg?branch=master)](https://travis-ci.org/decsys/rating-scales)
+[![Build Status](https://dev.azure.com/UniversityOfNottingham/DECSYS/_apis/build/status/decsys.rating-scales?branchName=master)](https://dev.azure.com/UniversityOfNottingham/DECSYS/_build/latest?definitionId=162?branchName=master)
 
 # DECSYS Rating Scales
 
