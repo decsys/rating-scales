@@ -58,10 +58,11 @@ stages:
           runOnce:
             deploy:
               steps:
+                - checkout: self
                 - download: current
                   artifact: drop
+                - bash: cp $(Pipeline.Workspace)/drop/* $(System.DefaultWorkingDirectory)/dist
                 - task: Npm@1
                   inputs:
                     command: publish
                     publishEndpoint: npmjs
-                    workingDir: $(Pipeline.Workspace)/drop
