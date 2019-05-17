@@ -62,9 +62,11 @@ stages:
                 - checkout: self
                 - download: current
                   artifact: drop
-                - bash: |
+                - bash: >
                     mkdir -p $(System.DefaultWorkingDirectory)/dist &&
-                    cp $(Pipeline.Workspace)/drop/* $(System.DefaultWorkingDirectory)/dist
+
+                    cp $(Pipeline.Workspace)/drop/*
+                    $(System.DefaultWorkingDirectory)/dist
                 - task: Npm@1
                   inputs:
                     command: publish
