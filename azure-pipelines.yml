@@ -50,3 +50,18 @@ stages:
 
                     git push origin HEAD:gh-pages -f
                   workingDirectory: $(Pipeline.Workspace)/docs
+      - deployment: npm
+        environment: GitHub
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                - task: Npm@1
+                  inputs:
+                    command: publish
+                    publishEndpoint: npmjs
+                    workingDir: $(Pipeline.Workspace)/drop
