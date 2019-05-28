@@ -16,10 +16,22 @@ const plugins = [
   terser()
 ];
 
+const filePrefix = pkg.name.replace("@", "").replace("/", ".");
+
+const input = {
+  bundle: "src/index.js",
+  ellipse: "src/Ellipse/Scale.js",
+  discrete: "src/Discrete/Scale.js"
+};
+
+const dir = "dist";
+
+const entryFileNames = `${filePrefix}.[name].[format].js`;
+
 export default [
   // browser
   {
-    input: "src/index.js",
+    input: input.bundle,
     output: {
       name: "DECSYS",
       file: pkg.browser,
@@ -35,10 +47,11 @@ export default [
   },
   // commonjs, esm
   {
-    input: "src/index.js",
+    input,
     output: [
       {
-        file: pkg.main,
+        dir,
+        entryFileNames,
         format: "cjs",
         sourcemap: true,
         globals: {
@@ -47,7 +60,8 @@ export default [
         }
       },
       {
-        file: pkg.module,
+        dir,
+        entryFileNames,
         format: "esm",
         sourcemap: true,
         globals: {

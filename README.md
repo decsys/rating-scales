@@ -30,10 +30,10 @@ e.g. all Scales
 - `import * as DECSYS from "@decsys/rating-scales";`
 - `const DECSYS = require("@decsys/rating-scales");`
 
-e.g. for just the Likert Scale
+e.g. for just the Discrete Scale
 
-- `import { LikertScale } from "@decsys/rating-scales";`
-- `const LikertScale = require("@decsys/rating-scales").LikertScale;`
+- `import { DiscreteScale } from "@decsys/rating-scales";`
+- `const DiscreteScale = require("@decsys/rating-scales").DiscreteScale;`
 
 ### Importing a sub-component directly from its module
 
@@ -54,11 +54,11 @@ The sub-components are not directly available in the browser.
 
 The following complete ratings scale components are available:
 
-- Likert Scale
+- Discrete Scale
 
-  - `import { LikertScale } from "@decsys/rating-scales";`
-  - `const LikertScale = require("@decsys/rating-scales").LikertScale;`
-  - `DECSYS.LikertScale` when using the browser build.
+  - `import { DiscreteScale } from "@decsys/rating-scales";`
+  - `const DiscreteScale = require("@decsys/rating-scales").DiscreteScale;`
+  - `DECSYS.DiscreteScale` when using the browser build.
 
 - Ellipse Scale
   - `import { EllipseScale } from "@decsys/rating-scales";`
