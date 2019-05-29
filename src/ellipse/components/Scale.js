@@ -1,15 +1,15 @@
 import React, { createRef } from "react";
 import PropTypes from "prop-types";
-import "./pixi";
+import "../pixi";
 import { Application } from "@pixi/app";
 import RangeBar from "./RangeBar";
 import ScaleLabel from "./ScaleLabel";
 import RangeMarker from "./RangeMarker";
 import EllipseCanvas, * as Canvas from "./Canvas";
-import Pen from "./pen-line";
-import Frame from "../core/StyledFrame";
-import Question from "../core/StyledQuestion";
-import FlexContainer from "../core/StyledBarContainer";
+import Pen from "../pen-line";
+import Frame from "../../core/StyledFrame";
+import Question from "../../core/StyledQuestion";
+import FlexContainer from "../../core/StyledBarContainer";
 import UnitValue from "unit-value";
 import ScaleMarkerSet from "./ScaleMarkerSet";
 

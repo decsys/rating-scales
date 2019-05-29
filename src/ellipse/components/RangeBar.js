@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ScaleBar, { ClassName } from "../core/StyledScaleBar";
+import { ScaleBar, ScaleBarClassName } from "../../core";
+
+// TODO: ELIMINATE
 
 /**
  * The Ellipse variant of a Scale Bar, supporting child markers

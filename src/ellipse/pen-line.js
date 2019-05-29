@@ -1,74 +1,6 @@
 import { Graphics } from "@pixi/graphics";
-import nameToHexString from "colornames";
-
-// Namespaced helpers used internally in this module
-
-/** Utility functions for working with colors */
-const Color = {
-  /**
-   * Get a numeric value representing the RGB value of a supported color
-   *
-   * @param {string|number} input
-   * The color, either by CSS friendly name (e.g. `red`)
-   * or RGB Hex code (e.g. `#ff0000`)
-   *
-   * If a number, simply returns it rather than errorring
-   * @returns {number} The color as a number value
-   * which hexadecimally would look like `0xRRGGBB`
-   */
-  getNumber: input => {
-    if (typeof input === "number") return input;
-
-    if (typeof input !== "string")
-      throw new TypeError(
-        "String expected, either a CSS color name or RGB Hex code."
-      );
-
-    if (!input.startsWith("#")) {
-      input = Color.getHexString(input);
-    }
-
-    if (!input) return;
-
-    const result = parseInt(input.substring(1), 16);
-    return !Number.isNaN(result) ? result : undefined;
-  },
-
-  /**
-   * Get an RGB Hex code for a supported color name
-   *
-   * @param {string} input
-   * The color, by CSS friendly name (e.g. `red`)
-   *
-   * @returns {string} The color as an RGB Hex code (e.g. `#ff0000`)
-   */
-  getHexString: input => {
-    if (typeof input !== "string")
-      throw new TypeError("CSS color name expected");
-    return nameToHexString(input);
-  }
-};
-
-/** Utility functions for calculating line collisions */
-const Collision = {
-  /** Determine the mid point between 2 points */
-  midPoint: (p1, p2) => {
-    return {
-      x: p1.x + (p2.x - p1.x) / 2,
-      y: p1.y + (p2.y - p1.y) / 2
-    };
-  },
-
-  /** Solve the normal quadratic form with values of a, b and c */
-  quadratic: (a, b, c) => [
-    (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a),
-    (-b - Math.sqrt(b * b - 4 * a * c)) / (2 * a)
-  ],
-
-  /** substitute a known `t` value into a parametric equation */
-  substituteT: (v1, v2, v3, t) =>
-    (v1 - 2 * v2 + v3) * t * t + 2 * (v2 - v1) * t + v1
-};
+import * as Color from "./utils/color";
+import * as Collision from "./utils/collision";
 
 /**
  * A PIXI Graphics object for drawing an ellipse,
@@ -77,13 +9,9 @@ const Collision = {
 export default class PenLine extends Graphics {
   constructor(parent, { color = "black", thickness = 2 } = {}) {
     super();
-
     parent.addChild(this);
-
     this.points = [];
-
     this.debugColliderY = 0;
-
     this.setOptions({ color, thickness });
   }
 
@@ -93,9 +21,7 @@ export default class PenLine extends Graphics {
 
   setOptions({ thickness, color } = {}) {
     if (thickness != null) this.thickness = thickness;
-
     if (color != null) this.color = color;
-
     this._updateGraphics();
   }
 
@@ -112,13 +38,10 @@ export default class PenLine extends Graphics {
 
   _updateGraphics() {
     if (this.points.length < 2) return;
-
     const [{ x, y }] = this.points;
-
     this.clear()
       .lineStyle(this.thickness, Color.getNumber(this.color))
       .moveTo(x, y);
-
     for (let i = 1; i < this.points.length; i++) {
       const { x: ox, y: oy } = this.points[i - 1];
       const { x, y } = this.points[i];
@@ -139,14 +62,15 @@ export default class PenLine extends Graphics {
     if (this.points.length > 0) {
       this.addPoint(this.points[0]);
       // add twice due to our interpolation algorithm for curve drawing :\
-      this.addPoint(this.points[0]);
+      this.addPoint(this.points[0]); // TODO: this is bugged
     }
   }
 
   findIntersections(y) {
     this.debugColliderY = y; // store last attempted y in case we are outputting debug info
+
+    // if we ARE outputting debug info, also log the numeric value
     if (this.drawDebugCollider)
-      // if we ARE outputting debug info, also log the numeric value
       console.log(`pen collision detection at y value of ${y}`);
 
     const hits = []; // this will store x co-ords where we cross y
