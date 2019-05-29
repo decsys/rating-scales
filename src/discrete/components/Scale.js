@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Frame from "../core/StyledFrame";
-import ScaleBar from "../core/StyledScaleBar";
-import Question from "../core/StyledQuestion";
-import FlexContainer from "../core/StyledBarContainer";
-import Radio from "./Radio";
+import Frame from "../../core/StyledFrame";
+import ScaleBar from "../../core/StyledScaleBar";
+import Question from "../../core/StyledQuestion";
+import FlexContainer from "../../core/StyledBarContainer";
+import Radio from "./Radio/Radio";
 
 /** A Discrete Scale */
 export default class DiscreteScale extends React.Component {

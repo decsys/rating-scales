@@ -5,9 +5,6 @@ module.exports = {
   styleguideDir: "docs",
   title: "Decsys Rating Scales",
 
-  // very few non-component js files in this repo, so we ignore them this way
-  ignore: ["**/pen-line.js", "**/pixi.js"],
-
   pagePerSection: true,
   sections: [
     {
@@ -15,19 +12,9 @@ module.exports = {
       content: "./README.md"
     },
     {
-      name: "Core Components",
-      content: "src/core/overview.md",
-      components: ["src/core/*.js"]
-    },
-    {
-      name: "Discrete Scale",
-      content: "src/discrete/overview.md",
-      components: ["src/discrete/*.js"]
-    },
-    {
-      name: "Ellipse Scale",
-      content: "src/ellipse/overview.md",
-      components: ["src/ellipse/*.js"]
+      name: "Scales",
+      content: "src/overview.md",
+      components: ["src/discrete/components/Scale.js", "src/ellipse/Scale.js"]
     }
   ],
 
@@ -48,9 +35,9 @@ module.exports = {
     const name = path.basename(componentPath, ".js");
 
     const dir = componentPath
-      .replace(/src/, `${pkg.name}`)
+      .replace(/src/, `${pkg.name}/esm`)
       .replace(/\\/g, "/")
-      .replace(".js", "");
+      .replace("/components/Scale.js", "");
     return `import ${name} from '${dir}';`;
   }
 };
