@@ -19,8 +19,8 @@ const plugins = [
 const bundleEntryPoint = "src/index.js";
 const input = {
   [pkg.name.replace("@", "").replace("/", ".")]: bundleEntryPoint,
-  ellipse: "src/ellipse/Scale.js",
-  discrete: "src/discrete/Scale.js"
+  ellipse: "src/ellipse/index.js",
+  discrete: "src/discrete/index.js"
 };
 
 const entryFileNames = `[name].js`;

@@ -1,4 +1,4 @@
-export { default as StyledBarContainer } from "./StyledBarContainer";
-export { default as StyledFrame } from "./StyledFrame";
-export { default as StyledQuestion } from "./StyledQuestion";
-export { default as StyledScaleBar } from "./StyledScaleBar";
+export { default as Container } from "./StyledBarContainer";
+export { default as Frame } from "./StyledFrame";
+export { default as Question } from "./StyledQuestion";
+export { default as ScaleBar } from "./StyledScaleBar";
