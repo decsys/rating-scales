@@ -14,7 +14,10 @@ module.exports = {
     {
       name: "Scales",
       content: "src/overview.md",
-      components: ["src/discrete/components/Scale.js", "src/ellipse/Scale.js"]
+      components: [
+        "src/discrete/components/Scale.js",
+        "src/ellipse/components/Scale.js"
+      ]
     }
   ],
 

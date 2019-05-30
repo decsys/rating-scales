@@ -1,26 +1,21 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import ScaleMarker from "./ScaleMarker";
+import ScaleMarker, { propTypes } from "./ScaleMarker";
 
 /**
  * A marker for the RangeBar to indicate
  * the range of an ellipse drawn against the bar
  */
 const RangeMarker = styled(ScaleMarker)`
+  position: ${({ position: x }) => x}
   &::before {
     z-index: 3;
   }
 `;
 
 RangeMarker.propTypes = {
-  /** A valid CSS Color value for the marker */
-  markerColor: PropTypes.string,
-
-  /** A valid CSS Dimension value for the length of the marker */
-  length: PropTypes.string,
-
-  /** A valid CSS Dimension value for the thickness of the marker */
-  thickness: PropTypes.string
+  ...propTypes,
+  position: PropTypes.string.isRequired
 };
 
 RangeMarker.defaultProps = {
