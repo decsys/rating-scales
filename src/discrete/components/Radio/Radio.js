@@ -26,29 +26,36 @@ const Radio = ({
     );
   };
 
-  const label = (
-    <RadioLabel
-      labelColor={labelColor}
-      fontFamily={fontFamily}
-      fontSize={fontSize}
-      above={labelAbove}
-      htmlFor={id}
-    >
-      {value}
-    </RadioLabel>
+  const label = useMemo(
+    () => (
+      <RadioLabel
+        labelColor={labelColor}
+        fontFamily={fontFamily}
+        fontSize={fontSize}
+        above={labelAbove}
+        htmlFor={id}
+      >
+        {value}
+      </RadioLabel>
+    ),
+    [labelColor, fontFamily, fontSize, labelAbove, id]
   );
 
-  const secondaryLabel = secondaryLabelText ? (
-    <SecondaryRadioLabel
-      labelColor={labelColor}
-      fontFamily={fontFamily}
-      fontSize={fontSize}
-      above={labelAbove}
-      htmlFor={id}
-    >
-      {secondaryLabelText}
-    </SecondaryRadioLabel>
-  ) : null;
+  const secondaryLabel = useMemo(
+    () =>
+      secondaryLabelText ? (
+        <SecondaryRadioLabel
+          labelColor={labelColor}
+          fontFamily={fontFamily}
+          fontSize={fontSize}
+          above={labelAbove}
+          htmlFor={id}
+        >
+          {secondaryLabelText}
+        </SecondaryRadioLabel>
+      ) : null,
+    [secondaryLabelText, labelColor, fontFamily, fontSize, labelAbove, id]
+  );
 
   return (
     <RadioContainer>

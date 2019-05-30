@@ -1,15 +1,14 @@
-import React, { createRef } from "react";
-import PropTypes from "prop-types";
+import React, { createRef, useState, useMemo, useRef, useEffect } from "react";
 import "../pixi";
 import { Application } from "@pixi/app";
 import RangeBar from "./RangeBar";
 import ScaleLabel from "./ScaleLabel";
 import RangeMarker from "./RangeMarker";
-import EllipseCanvas, * as Canvas from "./Canvas";
-import Pen from "../pen-line";
-import Frame from "../../core/StyledFrame";
-import Question from "../../core/StyledQuestion";
-import FlexContainer from "../../core/StyledBarContainer";
+import EllipseCanvas from "./Canvas";
+import * as Canvas from "../utils/canvas";
+import PenLine from "../pen-line";
+import { Frame, Question, Container } from "../../core";
+import { useElementRef } from "../../hooks";
 import UnitValue from "unit-value";
 import ScaleMarkerSet from "./ScaleMarkerSet";
 
@@ -23,6 +22,102 @@ const resizeHandler = (app, main, ...elems) => {
   app.renderer.resize(width, height);
 };
 
+const EllipseScale = ({
+  frameHeight,
+  question,
+  questionOptions,
+  barOptions,
+  scaleMarkerOptions,
+  heightElements: heightElementsSelector = null,
+  penOptions,
+  minRangeValue: initialMinRangeValue,
+  maxRangeValue: initialMaxRangeValue
+}) => {
+  const [canvas, canvasRef] = useElementRef(); // canvas DOM element
+  const [rangeBar, rangeBarRef] = useElementRef(); // RangeBar component. may not need after we lift up state
+  const [maxMarker, maxMarkerRef] = useElementRef(); // marker DOM elements
+  const [minMarker, minMarkerRef] = useElementRef(); // shouldn't need due to prop changes
+
+  const [outputs, setOutputs] = useState();
+
+  // const mainElement = useRef(); // maybe just reference the canvas directly
+  // useEffect(() => (mainElement.current = canvas.current.parentElement));
+
+  const heightElements = useMemo(
+    () => document.querySelectorAll(heightElementsSelector),
+    heightElementsSelector
+  );
+
+  // Event handlers
+  const handlePointerDown = ({ data }) => {
+    if (data.originalEvent.buttons === 1)
+      pen.reset({ x: data.global.x, y: data.global.y });
+  };
+
+  const handlePointerMove = ({ data }) => {
+    if (data.originalEvent.buttons === 1) {
+      const { x, y } = data.global;
+      // also check we are in the hit area
+      // (we don't care for moves outside it)
+      if (app.stage.hitArea.contains(x, y)) pen.addPoint({ x, y });
+    }
+  };
+
+  // Initialise PIXI
+  const appRef = useRef();
+  const [app, setApp] = useState();
+  useEffect(() => {
+    // Init
+    appRef.current = new Application({
+      width: 0,
+      height: 0,
+      view: canvas,
+      resolution: window.devicePixelRatio,
+      antialias: true,
+      transparent: true
+    });
+    setApp(app.current);
+
+    // Event handling
+    app.stage.interactive = true;
+    app.stage.hitArea = app.screen;
+    app.stage.pointerdown = handlePointerDown;
+    app.stage.pointermove = handlePointerMove;
+    app.stage.pointerup = handlePointerUp;
+  }, [canvas]); // is this a good idea? or should we use the ref directly
+
+  // Initialise the PenLine
+  const penRef = useRef();
+  const [pen, setPen] = useState();
+  useEffect(() => {
+    if (app !== app) {
+      // penOptions alone is no reason to create a new pen
+      // TODO: it might be reason to change the pen options though...
+      penRef.current = new PenLine(app.stage, penOptions);
+      setPen(penRef.current);
+    }
+  }, [app, penOptions]);
+
+  // Initial Range Bar Markers
+  const [minRangeValue, setMinRangeValue] = useState(initialMinRangeValue);
+  const [maxRangeValue, setMaxRangeValue] = useState(initialMaxRangeValue);
+
+  return (
+    <Frame key="EllipseFrame" frameHeight={frameHeight}>
+      <EllipseCanvas key="EllipseCanvas" ref={canvasRef} />
+      <Question {...questionOptions}>{question}</Question>
+      <RangeBar ref={rangeBarRef} {...barOptions}>
+        <Container>
+          <ScaleMarkerSet {...scaleMarkerOptions} />
+        </Container>
+        <Container>{labels}</Container>
+        <RangeMarker {...rangeMarkerProps} ref={minMarkerRef} />
+        <RangeMarker {...rangeMarkerProps} ref={maxMarkerRef} />
+      </RangeBar>
+    </Frame>
+  );
+};
+
 /** An Ellipse Scale */
 export default class EllipseScale extends React.Component {
   constructor(props) {
@@ -31,137 +126,6 @@ export default class EllipseScale extends React.Component {
 
     this.frame = createRef();
   }
-
-  static propTypes = {
-    /**
-     * An array of css selectors for elements
-     * to be used for calculating canvas height
-     */
-    heightElements: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-
-    /** A valid CSS Dimension value for the height of the component's frame */
-    frameHeight: PropTypes.string,
-
-    /** Initial minimum range value */
-    minRangeValue: PropTypes.number,
-
-    /** Initial maximum range value */
-    maxRangeValue: PropTypes.number,
-
-    /** Options for the Pen Line appearance */
-    penOptions: PropTypes.shape({
-      /** A valid CSS Color value for the pen line */
-      color: PropTypes.string,
-
-      /** A numeric value for the pen line thickness */
-      thickness: PropTypes.number
-    }),
-
-    /** Options for the scale's question text */
-    questionOptions: PropTypes.shape({
-      /** A valid CSS Color value for the question color. */
-      textColor: PropTypes.string,
-      /** A valid CSS Dimension value for the question top margin. */
-      topMargin: PropTypes.string,
-      /**
-       * A valid CSS Dimension value for the question left or right margin.
-       *
-       * The use of this value depends on alignment. It is ignored for `center` alignment,
-       * otherwise it is used as a margin on the aligned side (`left` or `right`).
-       */
-      xMargin: PropTypes.string,
-      /** A valid CSS Font Family value for the question font. */
-      fontFamily: PropTypes.string,
-      /** A valid CSS Font Size value for the question font size. */
-      fontSize: PropTypes.string,
-      /** Text alignment of the question within the frame. */
-      xAlign: PropTypes.oneOf(["left", "center", "right"])
-    }),
-
-    /** Question text to display */
-    question: PropTypes.string,
-
-    /** Options for the scale's horizontal bar */
-    barOptions: PropTypes.shape({
-      /**
-       * The numeric value of the left hand end of the range bar
-       * (the minimum possible value of the range)
-       */
-      minValue: PropTypes.number.isRequired,
-      /**
-       * The numeric value of the right hand end of the range bar
-       * (the maximum possible value of the range)
-       */
-      maxValue: PropTypes.number.isRequired,
-      /** A valid CSS Dimension value for the bar left margin. */
-      leftMargin: PropTypes.string,
-      /** A valid CSS Dimension value for the bar right margin. */
-      rightMargin: PropTypes.string,
-      /** A valid CSS Dimension value for the bar top margin. */
-      topMargin: PropTypes.string,
-      /** A valid CSS Color value for the bar color. */
-      barColor: PropTypes.string,
-      /** A valid CSS Dimension value for the bar thickness. */
-      thickness: PropTypes.string
-    }),
-
-    /** Options for the range bar's fixed labels */
-    labelOptions: PropTypes.shape({
-      /** A valid CSS Color value for the label text */
-      labelColor: PropTypes.string,
-      /** A valid CSS Font Family value for any labels associated with this Radio component. */
-      fontFamily: PropTypes.string,
-      /** A valid CSS Font Size value for any labels associated with this Radio component. */
-      fontSize: PropTypes.string,
-      /** Vertical alignment of the label relative to its position */
-      yAlign: PropTypes.oneOf(["above", "center", "below"])
-    }),
-
-    /** Fixed label values for the range bar */
-    labels: PropTypes.shape({
-      /** Label value for the left hand end */
-      min: PropTypes.string,
-      /** Central label value */
-      mid: PropTypes.string,
-      /** Label value for the right hand end */
-      max: PropTypes.string
-    }),
-
-    /** Options for the Range Markers appearance */
-    rangeMarkerOptions: PropTypes.shape({
-      /** A valid CSS Color value for the marker */
-      markerColor: PropTypes.string,
-      /** A valid CSS Dimension value for the length of the marker */
-      length: PropTypes.string,
-      /** A valid CSS Dimension value for the thickness of the marker */
-      thickness: PropTypes.string
-    }),
-
-    /** Options for the Scale Markers */
-    scaleMarkerOptions: PropTypes.shape({
-      /** A valid CSS Color value for the marker */
-      markerColor: PropTypes.string,
-      /** A valid CSS Dimension value for the length of the marker */
-      length: PropTypes.string,
-      /** A valid CSS Dimension value for the thickness of the marker */
-      thickness: PropTypes.string
-    })
-  };
-
-  static defaultProps = {
-    // default all shapes to empty objects
-    // so we don't have to null check before accessing children
-    penOptions: {},
-    questionOptions: {},
-    barOptions: {},
-    labelOptions: {},
-    labels: {},
-    rangeMarkerOptions: {},
-    scaleMarkerOptions: {}
-  };
 
   componentDidMount() {
     // store these to avoid selecting them everytime
