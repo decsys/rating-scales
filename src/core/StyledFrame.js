@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
  * (`em`, `rem`, `%`) in sub-components are based on
  */
 const StyledFrame = styled.div`
-  height: ${props => props.frameHeight};
+  height: ${({ frameHeight: x }) => x};
   width: 100%;
   position: relative;
   font-size: 14px;

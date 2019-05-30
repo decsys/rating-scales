@@ -14,16 +14,17 @@ export const ClassName = "js--scalebar";
 const StyledScaleBar = styled.div.attrs({
   className: ClassName
 })`
-  margin-left: ${props => props.leftMargin};
-  margin-right: ${props => props.rightMargin};
+  margin-left: ${({ leftMargin: x }) => x};
+  margin-right: ${({ rightMargin: x }) => x};
   position: relative;
-  top: ${props => props.topMargin};
+  top: ${({ leftMargin: x }) => x};
 
   &::before {
-    border-top: ${props => `${props.thickness} solid ${props.barColor}`};
+    border-top: ${({ thickness, barColor }) =>
+      `${thickness} solid ${barColor}`};
     content: "";
     position: absolute;
-    top: ${props => `calc(${props.thickness} / -2)`};
+    top: ${({ thickness: x }) => `calc(${x} / -2)`};
     width: 100%;
     z-index: 1;
   }
@@ -32,16 +33,12 @@ const StyledScaleBar = styled.div.attrs({
 StyledScaleBar.propTypes = {
   /** A valid CSS Dimension value for the bar left margin. */
   leftMargin: PropTypes.string,
-
   /** A valid CSS Dimension value for the bar right margin. */
   rightMargin: PropTypes.string,
-
   /** A valid CSS Dimension value for the bar top margin. */
   topMargin: PropTypes.string,
-
   /** A valid CSS Color value for the bar color. */
   barColor: PropTypes.string,
-
   /** A valid CSS Dimension value for the bar thickness. */
   thickness: PropTypes.string
 };
