@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import ScaleMarker, { propTypes } from "./ScaleMarker";
+import ScaleMarker, { propTypes } from "./ScaleMarkerSet/ScaleMarker";
 
 /**
  * A marker for the RangeBar to indicate
