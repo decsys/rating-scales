@@ -10,6 +10,8 @@ You can use these basically anywhere you have [React].
 
 The DECSYS Project uses them for survey question components for its Survey Platform.
 
+**This repository is for 1.x only. The code has since moved to the [main decsys monorepo](https://github.com/decsys/decsys).**
+
 # Usage
 
 ## Installation
